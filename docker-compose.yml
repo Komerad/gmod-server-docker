@@ -1,0 +1,30 @@
+version: '2'
+services:
+  # --------------------------------------------------------------------------
+  # Gmod/SrcDS
+  # --------------------------------------------------------------------------
+  docker-source-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GAME_NAME=${GAME_NAME}
+        - GAME_APPID=${GAME_APPID}
+        - GAME_BASE_APPID=${GAME_BASE_APPID}
+        - GAME_INSTALL_CSS=${GAME_INSTALL_CSS}
+        - SERVER_PORT=${SERVER_PORT}
+        - MAP_DIR=${MAP_DIR}
+        - GMOD_ADDON_DIR=${GMOD_ADDON_DIR}
+        - GAME_IS_CUSTOM=${GAME_IS_CUSTOM}
+        - GAME_CUSTOM_URL=${GAME_CUSTOM_URL}
+        - GAME_CUSTOM_URL2=${GAME_CUSTOM_URL2}
+        - GAME_CUSTOM_MULTIDOWNLOAD=${GAME_CUSTOM_MULTIDOWNLOAD}
+    image: source-local-test:css
+    restart: unless-stopped
+    hostname: docker-source-server
+    env_file: .env
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}/udp
+    container_name: docker-source-server
+    stdin_open: true
+    tty: true
